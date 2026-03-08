@@ -1,0 +1,63 @@
+<div class="container-main">
+
+    <div class="card black-border">
+        <div class="card-header d-flex justify-content-center align-items-center black-border">
+            <div>IT 06-1</div>
+        </div>
+
+        <div class="card-body mx-5">
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-1">
+                    <label class="form-label">รหัสสินค้า</label>
+                </div>
+
+                <div class="col-md-10">
+                    <input type="text" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19"
+                        [(ngModel)]="productCode" (input)="onSearch()" />
+                </div>
+
+                <div class="col-md-1 d-flex justify-content-end">
+                    <button class="btn btn-primary w-100" (click)="addProduct()">ADD</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover black-border align-middle">
+                    <thead>
+                        <tr class="text-center">
+                            <th style="width: 5%;">Id</th>
+                            <th style="width: 30%;">รหัสสินค้า (16 หลัก)</th>
+                            <th style="width: 50%;">บาร์โค้ดสินค้า</th>
+                            <th style="width: 5%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="products().length > 0; else noData">
+                        <tr class="text-center" *ngFor="let product of products(); let i = index">
+                            <td>{{ product.id }} </td>
+                            <td>{{ product.formattedProductCode }}</td>
+                            <td>
+                                <div class="barcode-container">
+                                    <svg [attr.id]="'barcode-' + product.id"></svg>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-delete text-white w-100"
+                                    (click)="deleteProduct(product.id, product.formattedProductCode)">ลบ</button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <ng-template #noData>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">
+                                    ไม่พบข้อมูล
+                                </td>
+                            </tr>
+                        </tbody>
+                    </ng-template>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
